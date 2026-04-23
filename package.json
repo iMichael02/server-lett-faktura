@@ -1,0 +1,30 @@
+{
+    "name": "server-lett-faktura",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "cross-env NODE_ENV=local nodemon src/app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@prisma/client": "^7.8.0",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "helmet": "^8.1.0",
+        "joi": "^18.1.2",
+        "jsonwebtoken": "^9.0.3",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
+        "winston": "^3.19.0"
+    },
+    "devDependencies": {
+        "cross-env": "^10.1.0",
+        "nodemon": "^3.1.14",
+        "prisma": "^7.8.0"
+    }
+}
