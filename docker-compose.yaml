@@ -1,14 +1,14 @@
 services:
     db:
-        image: postgres:8.0
-        containernames: db-lett-faktura
+        image: postgres:18
+        container_name: db-lett-faktura
         environment:
-            POSTGRES_ROOT_PASSWORD: 123456
-            POSTGRES_DATABASE: lett_faktura
+            POSTGRES_PASSWORD: 123456
+            POSTGRES_DB: lett_faktura
         ports:
             - 5432:5432
         volumes:
-            - postgres_data:/var/lib/postgresql/data
+            - postgres_data:/var/lib/postgresql
         healthcheck:
             test:
                 [
@@ -16,7 +16,9 @@ services:
                     "pg_isready -U postgres -d lett_faktura -h localhost -p 5432",
                 ]
             interval: 10s
+            timeout: 5s
             retries: 5
+            start_period: 20s
         networks:
             - lett_faktura_network
 
@@ -24,11 +26,14 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        containernames: server-lett-faktura
+        container_name: server-lett-faktura
         environment:
             NODE_ENV: development
             PORT: 3000
-            DATABASE_URL: postgres://postgres:123456@db:5432/lett_faktura
+            DATABASE_URL: postgresql://postgres:123456@db:5432/lett_faktura
+            JWT_ACCESS_SECRET: dfkgkkjgbkdjfbvkebliuilwwiiilzp
+            JWT_REFRESH_SECRET: lzvpoiaheuirabvkadbjhbbvhjvzdkhwe
+            SALT_ROUNDS: 12
         ports:
             - 3000:3000
         depends_on:
@@ -36,6 +41,7 @@ services:
                 condition: service_healthy
         networks:
             - lett_faktura_network
+        command: sh -c "npx prisma migrate deploy && npx prisma generate && npm run start"
 
 networks:
     lett_faktura_network:
