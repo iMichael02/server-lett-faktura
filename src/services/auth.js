@@ -54,19 +54,13 @@ export const login = async (email, password) => {
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-        throw new Error(errors.INVALID_CREDENTIALS.message, {
-            code: errors.INVALID_CREDENTIALS.code,
-            status: errors.INVALID_CREDENTIALS.status,
-        });
+        throw new Error(errors.INVALID_CREDENTIALS.code);
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-        throw new Error(errors.INVALID_CREDENTIALS.message, {
-            code: errors.INVALID_CREDENTIALS.code,
-            status: errors.INVALID_CREDENTIALS.status,
-        });
+        throw new Error(errors.INVALID_CREDENTIALS.code);
     }
 
     const accessToken = generateAccessToken(user);
@@ -85,10 +79,7 @@ export const login = async (email, password) => {
 
 export const logout = async (refreshToken) => {
     if (!refreshToken) {
-        throw new Error(errors.INVALID_CREDENTIALS.message, {
-            code: errors.INVALID_CREDENTIALS.code,
-            status: errors.INVALID_CREDENTIALS.status,
-        });
+        throw new Error(errors.INVALID_CREDENTIALS.code);
     }
 
     const existingToken = await prisma.refreshToken.findUnique({
@@ -96,10 +87,7 @@ export const logout = async (refreshToken) => {
     });
 
     if (!existingToken) {
-        throw new Error(errors.INVALID_CREDENTIALS.message, {
-            code: errors.INVALID_CREDENTIALS.code,
-            status: errors.INVALID_CREDENTIALS.status,
-        });
+        throw new Error(errors.INVALID_CREDENTIALS.code);
     }
 
     await prisma.refreshToken.update({
