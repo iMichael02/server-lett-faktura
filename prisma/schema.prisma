@@ -39,6 +39,7 @@ model RefreshToken {
 
 model Price {
     id          String   @id @default(uuid())
+    articleNo   String?  @unique
     product     String
     inPrice     Float
     price       Float

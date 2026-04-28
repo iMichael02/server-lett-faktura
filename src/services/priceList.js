@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma";
+import { prisma } from "../lib/prisma.js";
 
 const getOrderBy = (sortedBy, order) => {
     const orderBy = [];
@@ -19,4 +19,12 @@ export const getPriceList = async (sortedBy, order) => {
     });
 
     return priceList;
+};
+
+export const updatePrice = async (id, priceData) => {
+    const updatedPrice = await prisma.price.update({
+        where: { id },
+        data: priceData,
+    });
+    return updatedPrice;
 };
