@@ -74,7 +74,11 @@ export const login = async (email, password) => {
         },
     });
 
-    return { accessToken, refreshToken };
+    return {
+        accessToken,
+        refreshToken,
+        user: { id: user.id, email: user.email, name: user.name },
+    };
 };
 
 export const logout = async (refreshToken) => {

@@ -21,7 +21,10 @@ authRoutes.post("/register", async (req, res, next) => {
 authRoutes.post("/login", async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const { accessToken, refreshToken } = await login(email, password);
+        const { accessToken, refreshToken, user } = await login(
+            email,
+            password,
+        );
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
@@ -33,6 +36,7 @@ authRoutes.post("/login", async (req, res, next) => {
         res.json({
             success: true,
             accessToken,
+            user,
         });
     } catch (error) {
         next(error);
