@@ -24,7 +24,15 @@ export const getPriceList = async (sortedBy, order) => {
 export const updatePrice = async (id, priceData) => {
     const updatedPrice = await prisma.price.update({
         where: { id },
-        data: priceData,
+        data: {
+            articleNo: priceData.articleNo,
+            product: priceData.product,
+            price: Number(priceData.price),
+            inPrice: Number(priceData.inPrice),
+            unit: priceData.unit,
+            inStock: Number(priceData.inStock),
+            description: priceData.description,
+        },
     });
     return updatedPrice;
 };

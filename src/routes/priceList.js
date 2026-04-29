@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPriceList } from "../services/priceList.js";
+import { getPriceList, updatePrice } from "../services/priceList.js";
 import { authenticateToken } from "../middlewares/auth.js";
 
 const priceListRoutes = Router();
@@ -24,6 +24,7 @@ priceListRoutes.put("/:id", async (req, res, next) => {
     try {
         const { id } = req.params;
         const priceData = req.body;
+        console.log("Updating price with ID:", id, "and data:", priceData);
 
         const updatedPrice = await updatePrice(id, priceData);
 
