@@ -2,6 +2,7 @@ import { errors } from "../utils/errors.js";
 
 export const globalErrorHandler = (err, req, res, next) => {
     const errorCodes = Object.values(errors).map((error) => error.code);
+    console.error(err);
 
     if (err.message && errorCodes.includes(err.message)) {
         const errorInfo = errors[err.message];
