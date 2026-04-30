@@ -1,6 +1,6 @@
 import { Router } from "express";
 import authRoutes from "./auth.js";
-import priceListRoutes from "./pricelist.js";
+import priceListRoutes from "./priceList.js";
 
 const apiRoutes = Router();
 
